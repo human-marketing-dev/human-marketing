@@ -173,3 +173,24 @@ html {
 .animate-marquee {
   animation: marquee var(--marquee-duration, 40s) linear infinite;
 }
+
+/* ── Hero slider ────────────────────────────────────────────────────────── */
+@keyframes hero-kenburns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.06); }
+}
+@keyframes hero-progress {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+/* Ken Burns solo sobre la slide activa. En CSS puro a proposito: hacerlo con
+   Motion escribiria transform inline y peleeria con el de Embla. */
+.hero-slide[data-active="true"] .hero-slide-media {
+  animation: hero-kenburns 7s ease-out forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide .hero-slide-media,
+  .hero-progress-fill {
+    animation: none !important;
+  }
+}

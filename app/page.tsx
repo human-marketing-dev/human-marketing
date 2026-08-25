@@ -1,8 +1,8 @@
+import { Hero } from "@/components/sections/hero";
 import { AgenciaMarketingDigital } from "@/components/sections/agencia-marketing-digital";
 import { Clientes } from "@/components/sections/clientes";
 import { VideosDestacados } from "@/components/sections/videos-destacados";
 import { LeadFormCta } from "@/components/home/LeadFormCta";
-import { PhotoSlider } from "@/components/home/PhotoSlider";
 import { Portfolio } from "@/components/home/Portfolio";
 import { Reviews } from "@/components/home/Reviews";
 import { Services } from "@/components/home/Services";
@@ -13,7 +13,7 @@ import { Services } from "@/components/home/Services";
 export default function Home() {
   return (
     <>
-      <PhotoSlider />
+      <Hero />
       <AgenciaMarketingDigital />
       <Clientes />
       <Services />
