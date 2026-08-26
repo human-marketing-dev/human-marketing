@@ -9,7 +9,7 @@ export function Reviews() {
     <section
       id="resenas"
       aria-labelledby="resenas-titulo"
-      className="border-b border-tinta/10 py-16 lg:py-24"
+      className="mx-auto w-full max-w-site border-b border-tinta/10 py-16 lg:py-24"
     >
       <Container>
         <h2 id="resenas-titulo" className="text-3xl lg:text-5xl">

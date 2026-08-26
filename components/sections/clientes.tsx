@@ -49,7 +49,7 @@ const clientes: LogoCloudClient[] = [
 
 export function Clientes() {
   return (
-    <section id="clientes" aria-label="Nuestros clientes">
+    <section id="clientes" aria-label="Nuestros clientes" className="mx-auto w-full max-w-site">
       <CinematicLogoCloud clients={clientes} />
     </section>
   );

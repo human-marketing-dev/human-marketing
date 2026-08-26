@@ -32,10 +32,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es-MX" className={cn("h-full antialiased font-sans", humanSans.variable)}>
+    <html
+      lang="es-MX"
+      className={cn("h-full antialiased font-sans", humanSans.variable)}
+    >
       <body className="min-h-full bg-papel text-tinta">
-        {/* Todo el sitio vive dentro de un lienzo de 1450px, header y footer incluidos */}
-        <div className="mx-auto flex min-h-dvh w-full max-w-site flex-col">
+        {/* El lienzo de 1450px ya no vive aqui sino en cada componente (via
+            Container o `max-w-site` explicito), para que LeadForm y Footer
+            puedan sangrar su fondo hasta los bordes de la ventana. */}
+        <div className="flex min-h-dvh w-full flex-col">
           <Header />
           <main id="contenido" className="flex-1">
             {children}

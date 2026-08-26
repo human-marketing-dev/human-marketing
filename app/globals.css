@@ -19,6 +19,10 @@
   /* Neutros base */
   --color-tinta: #000000;
   --color-papel: #ffffff;
+
+  /* Superficie oscura compartida: Servicios, Lead Form y lo que venga.
+     Un solo lugar para cambiar el tono de todas las zonas oscuras. */
+  --color-surface-dark: #0a0612;
 }
 
 html {
@@ -193,4 +197,21 @@ html {
   .hero-progress-fill {
     animation: none !important;
   }
+}
+
+/* ── Header sticky ──────────────────────────────────────────────────────── */
+/* Una sola fuente para la altura del header: la usan el propio header y el
+   scroll-padding de los anchors, asi no se pueden desincronizar. */
+:root {
+  --header-height: 3.25rem; /* 52px: 4px menos que antes, 2px por lado */
+}
+@media (min-width: 1024px) {
+  :root {
+    --header-height: 3.75rem; /* 60px */
+  }
+}
+/* Altura de la barra + 12px del offset al pegarse + 2px de sus bordes
+   + 12px del margen inferior. Que los anchors no queden tapados. */
+html {
+  scroll-padding-top: calc(var(--header-height) + 26px);
 }

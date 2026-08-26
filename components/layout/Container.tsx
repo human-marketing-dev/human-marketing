@@ -6,12 +6,13 @@ type ContainerProps = {
 };
 
 /**
- * Padding horizontal consistente dentro del lienzo de 1450px.
- * El ancho maximo ya lo impone el shell en app/layout.tsx.
+ * Impone el lienzo de 1450px y el padding horizontal consistente.
+ * Es la unica fuente del ancho de contenido del sitio: quien quiera fondo a
+ * sangre pone el fondo en su <section> y mete el contenido aqui dentro.
  */
 export function Container({ children, className = "" }: ContainerProps) {
   return (
-    <div className={`w-full px-6 md:px-10 lg:px-16 ${className}`}>
+    <div className={`mx-auto w-full max-w-site px-6 md:px-10 lg:px-16 ${className}`}>
       {children}
     </div>
   );
