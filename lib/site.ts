@@ -12,6 +12,8 @@ export const contacto = {
   /** Formato de wa.me: solo digitos, con lada de pais. */
   whatsapp: "5218144914316",
   correo: "info@humanmarketing.mx",
+  /** Perfil de Google Business (Maps y reseñas). */
+  google: "https://share.google/8rEez1GuB0MOlirUV",
 } as const;
 
 export type NavItem = {
