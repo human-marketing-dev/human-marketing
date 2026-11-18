@@ -1,3 +1,5 @@
+import type { ServicioCta } from "@/lib/ctas";
+
 export type Imagen = {
   src: string;
   width: number;
@@ -41,6 +43,8 @@ export type Proyecto = {
   etiquetas?: string[];
   /** Lista completa del acordeon "Detalles del proyecto". */
   servicios?: string[];
+  /** Servicio principal: decide el texto del formulario de cierre (lib/ctas.ts). */
+  ctaServicio?: ServicioCta;
   /** Una o dos frases. Tambien se usa como meta description. */
   resumen?: string;
   reto?: string;
@@ -75,6 +79,7 @@ const scaled = (archivo: string): Imagen => ({
 export const portafolio: Proyecto[] = [
   {
     slug: "mar-y-mar",
+    ctaServicio: "branding",
     nombre: "Mar y Mar",
     servicio: "Diseño de Identidad + E-commerce",
     categorias: ["identidad", "web"],
@@ -84,6 +89,7 @@ export const portafolio: Proyecto[] = [
   },
   {
     slug: "epicus",
+    ctaServicio: "inmobiliario",
     nombre: "Epicus",
     servicio: "Marketing Inmobiliario",
     categorias: ["inmobiliario", "identidad", "web", "campanas"],
@@ -105,6 +111,7 @@ export const portafolio: Proyecto[] = [
   },
   {
     slug: "pagoel",
+    ctaServicio: "branding",
     nombre: "Pagoel",
     servicio: "Diseño de Identidad",
     categorias: ["identidad"],
@@ -114,6 +121,7 @@ export const portafolio: Proyecto[] = [
   },
   {
     slug: "dulceleste",
+    ctaServicio: "branding",
     nombre: "Dulceleste",
     servicio: "Diseño de Identidad + E-commerce",
     categorias: ["identidad", "web"],
@@ -123,6 +131,7 @@ export const portafolio: Proyecto[] = [
   },
   {
     slug: "peach-and-posh",
+    ctaServicio: "branding",
     nombre: "Peach & Posh",
     servicio: "Diseño de Identidad",
     categorias: ["identidad"],
@@ -132,6 +141,7 @@ export const portafolio: Proyecto[] = [
   },
   {
     slug: "agora",
+    ctaServicio: "inmobiliario",
     nombre: "Ágora",
     servicio: "Campañas Inmobiliarias",
     categorias: ["inmobiliario", "campanas"],
@@ -141,6 +151,7 @@ export const portafolio: Proyecto[] = [
   },
   {
     slug: "yomms",
+    ctaServicio: "branding",
     nombre: "Yomms",
     servicio: "Diseño de Identidad + Empaque",
     categorias: ["identidad"],
@@ -150,6 +161,7 @@ export const portafolio: Proyecto[] = [
   },
   {
     slug: "santte",
+    ctaServicio: "inmobiliario",
     nombre: "Santte",
     servicio: "Marketing Inmobiliario",
     categorias: ["inmobiliario", "campanas"],
@@ -159,6 +171,7 @@ export const portafolio: Proyecto[] = [
   },
   {
     slug: "no-traigo-lonche",
+    ctaServicio: "branding",
     nombre: "No Traigo Lonche",
     servicio: "Diseño de Identidad + Sitio Web",
     categorias: ["identidad", "web"],
@@ -168,6 +181,7 @@ export const portafolio: Proyecto[] = [
   },
   {
     slug: "mte",
+    ctaServicio: "web",
     nombre: "MTE Global Solutions",
     servicio: "Desarrollo Web",
     categorias: ["web"],
@@ -177,6 +191,7 @@ export const portafolio: Proyecto[] = [
   },
   {
     slug: "la-tinta",
+    ctaServicio: "branding",
     nombre: "La Tinta",
     servicio: "Diseño de Identidad",
     categorias: ["identidad"],
@@ -186,6 +201,7 @@ export const portafolio: Proyecto[] = [
   },
   {
     slug: "wallworks",
+    ctaServicio: "branding",
     nombre: "Wallworks",
     servicio: "Diseño de Identidad",
     categorias: ["identidad"],
@@ -195,6 +211,7 @@ export const portafolio: Proyecto[] = [
   },
   {
     slug: "sugarblood",
+    ctaServicio: "branding",
     nombre: "Sugarblood",
     servicio: "Diseño de Identidad",
     categorias: ["identidad"],
@@ -219,8 +236,8 @@ export function getProyecto(slug: string) {
   return portafolio.find((p) => p.slug === slug);
 }
 
-/** El siguiente en la lista, dando la vuelta al final. */
-export function siguienteProyecto(slug: string) {
+/** Los demas casos, empezando por el siguiente y dando la vuelta al final. */
+export function otrosProyectos(slug: string) {
   const i = portafolio.findIndex((p) => p.slug === slug);
-  return portafolio[(i + 1) % portafolio.length];
+  return [...portafolio.slice(i + 1), ...portafolio.slice(0, i)];
 }

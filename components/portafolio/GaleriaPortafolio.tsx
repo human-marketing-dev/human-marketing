@@ -29,13 +29,17 @@ const POR_LOTE = 6;
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-function Card({
+export function CardProyecto({
   proyecto,
-  prioridad,
+  prioridad = false,
+  nivel = "h2",
 }: {
   proyecto: Proyecto;
-  prioridad: boolean;
+  prioridad?: boolean;
+  /** h2 en el listado; h3 donde la card cuelga de otra seccion. */
+  nivel?: "h2" | "h3";
 }) {
+  const Titulo = nivel;
   const uid = useId();
   const reduceMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
@@ -106,7 +110,7 @@ function Card({
           >
             {proyecto.servicio}
           </p>
-          <h2 className="mt-2 text-2xl">
+          <Titulo className="mt-2 text-2xl">
             {/* Enlace estirado, mismo patron que Home/Portafolio. */}
             <Link
               href={rutaProyecto(proyecto)}
@@ -115,7 +119,7 @@ function Card({
             >
               <span id={`${uid}-nombre`}>{proyecto.nombre}</span>
             </Link>
-          </h2>
+          </Titulo>
         </div>
         <span
           aria-hidden
@@ -224,7 +228,7 @@ export function GaleriaPortafolio({ proyectos }: { proyectos: Proyecto[] }) {
               }}
               className={cn(ocultaEnChico(i) && "max-lg:hidden")}
             >
-              <Card proyecto={proyecto} prioridad={i < 3} />
+              <CardProyecto proyecto={proyecto} prioridad={i < 3} />
             </motion.li>
           ))}
         </AnimatePresence>

@@ -57,7 +57,18 @@ const ORDEN_CAMPOS: LeadField[] = [
 const inputClass =
   "border-white/20 bg-white/10 text-white placeholder:text-white/50 focus-visible:border-white/40 focus-visible:ring-white/20";
 
-export function LeadForm() {
+type LeadFormProps = {
+  titulo?: string;
+  texto?: string;
+  /** Frase final en blanco bajo el texto. */
+  cierre?: string;
+};
+
+export function LeadForm({
+  titulo = "¿Necesitas una Agencia de Marketing Digital?",
+  texto = "En Human Marketing estamos listos para ayudarte a estructurar, optimizar y potenciar tu prospección digital. Contamos con la metodología, la experiencia y las herramientas necesarias para convertir tu presencia en línea en un motor real de oportunidades comerciales.",
+  cierre = "Demos juntos el siguiente paso.",
+}: LeadFormProps = {}) {
   const [state, formAction, pending] = useActionState(
     submitLead,
     leadInitialState,
@@ -133,17 +144,13 @@ export function LeadForm() {
         <div className="relative grid grid-cols-1 gap-12 py-20 lg:grid-cols-3 lg:py-28">
           <div className="text-white lg:col-span-1">
             <h2 id={`${uid}-titulo`} className="text-3xl lg:text-4xl">
-              ¿Necesitas una Agencia de Marketing Digital?
+              {titulo}
             </h2>
             <p className="mt-6 leading-relaxed text-white/70">
-              En Human Marketing estamos listos para ayudarte a estructurar,
-              optimizar y potenciar tu prospección digital. Contamos con la
-              metodología, la experiencia y las herramientas necesarias para
-              convertir tu presencia en línea en un motor real de oportunidades
-              comerciales.
+              {texto}
             </p>
             <p className="mt-6 text-lg text-white">
-              Demos juntos el siguiente paso.
+              {cierre}
             </p>
           </div>
 

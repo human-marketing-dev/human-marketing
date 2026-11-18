@@ -2,10 +2,15 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 import { Container } from "@/components/layout/Container";
+import { OtrosProyectos } from "@/components/portafolio/OtrosProyectos";
+import { AgenciaMarketingDigital } from "@/components/sections/agencia-marketing-digital";
+import { Clientes } from "@/components/sections/clientes";
 import { LeadForm } from "@/components/sections/lead-form";
+import { Servicios } from "@/components/sections/servicios";
+import { ctasPorServicio } from "@/lib/ctas";
 import { DetallesProyecto } from "@/components/portafolio/DetallesProyecto";
 import { PortadaCaso } from "@/components/portafolio/PortadaCaso";
 import { Revelar } from "@/components/portafolio/Revelar";
@@ -14,7 +19,7 @@ import {
   getProyecto,
   portafolio,
   rutaProyecto,
-  siguienteProyecto,
+  otrosProyectos,
   type Proyecto,
 } from "@/lib/portafolio";
 
@@ -66,7 +71,7 @@ export default async function CasoPage({ params }: PageProps<"/portafolio/[slug]
   const p = getProyecto(slug);
   if (!p) notFound();
 
-  const siguiente = siguienteProyecto(p.slug);
+  const cta = p.ctaServicio ? ctasPorServicio[p.ctaServicio] : undefined;
   const tieneHistoria = Boolean(p.reto || p.solucion || p.resultados?.length);
 
   return (
@@ -205,41 +210,12 @@ export default async function CasoPage({ params }: PageProps<"/portafolio/[slug]
         </section>
       )}
 
-      <nav aria-label="Siguiente proyecto" className="pt-16 lg:pt-24">
-        <Container>
-          <Link
-            href={rutaProyecto(siguiente)}
-            className="group relative block overflow-hidden rounded-3xl bg-surface-dark text-white"
-          >
-            <div className="relative" style={{ aspectRatio: "31 / 9" }}>
-              <Image
-                src={siguiente.portada.src}
-                alt=""
-                fill
-                sizes="(min-width: 1450px) 1322px, 100vw"
-                className="object-cover opacity-50 transition duration-700 group-hover:scale-[1.04] group-hover:opacity-70"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-6 p-6 lg:p-10">
-                <div>
-                  <p className="text-sm tracking-widest text-white/70 uppercase">
-                    Siguiente proyecto
-                  </p>
-                  <p className="mt-2 text-3xl lg:text-6xl">{siguiente.nombre}</p>
-                </div>
-                <span
-                  aria-hidden
-                  className="flex size-12 shrink-0 items-center justify-center rounded-full bg-white text-tinta transition-transform duration-300 group-hover:translate-x-1 lg:size-16"
-                >
-                  <ArrowRight className="size-5 lg:size-6" />
-                </span>
-              </div>
-            </div>
-          </Link>
-        </Container>
-      </nav>
+      <OtrosProyectos proyectos={otrosProyectos(p.slug)} />
+      <AgenciaMarketingDigital eyebrow="Sobre Nosotros" nivel="h2" />
+      <Clientes />
+      <Servicios />
 
-      <LeadForm />
+      <LeadForm {...cta} />
     </article>
   );
 }
