@@ -33,8 +33,14 @@ export type Proyecto = {
   portada: Imagen;
   /** Imagenes extra del caso, en orden. La portada no se repite aqui. */
   galeria: Imagen[];
+  /** Razon social o marca del cliente, si difiere del nombre del proyecto. */
+  cliente?: string;
   industria?: string;
   anio?: string;
+  /** Pastillas cortas bajo el resumen: "Branding", "Content"... */
+  etiquetas?: string[];
+  /** Lista completa del acordeon "Detalles del proyecto". */
+  servicios?: string[];
   /** Una o dos frases. Tambien se usa como meta description. */
   resumen?: string;
   reto?: string;
@@ -61,7 +67,7 @@ const scaled = (archivo: string): Imagen => ({
 });
 
 /**
- * TODO(contenido): todo lo de aqui es PROVISIONAL. Nombres, servicios y
+ * TODO(contenido): salvo Epicus, todo lo de aqui es PROVISIONAL. Nombres, servicios y
  * categorias se dedujeron de las imagenes del sitio anterior (public/hero/),
  * y ningun caso tiene aun resumen, reto, solucion ni resultados. Las paginas
  * de detalle muestran esas secciones solo cuando el campo existe.
@@ -80,10 +86,22 @@ export const portafolio: Proyecto[] = [
     slug: "epicus",
     nombre: "Epicus",
     servicio: "Marketing Inmobiliario",
-    categorias: ["inmobiliario", "campanas"],
+    categorias: ["inmobiliario", "identidad", "web", "campanas"],
     color: "#1e3fd8",
     portada: scaled("Epicus_homepage"),
     galeria: [],
+    // Contenido real, confirmado por Human (2026-11-18).
+    cliente: "Epicus",
+    industria: "Inmobiliario",
+    resumen:
+      "Proyecto de Marketing Inmobiliario para Epicus: Identidad visual, contenido, desarrollo web y campañas de captación de leads.",
+    etiquetas: ["Branding", "Content", "Campañas de Leads", "Desarrollo web"],
+    servicios: [
+      "Branding",
+      "Content Marketing",
+      "Campañas de Leads",
+      "Desarrollo Web",
+    ],
   },
   {
     slug: "pagoel",

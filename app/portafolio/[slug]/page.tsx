@@ -6,10 +6,10 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import { Container } from "@/components/layout/Container";
 import { LeadForm } from "@/components/sections/lead-form";
+import { DetallesProyecto } from "@/components/portafolio/DetallesProyecto";
 import { PortadaCaso } from "@/components/portafolio/PortadaCaso";
 import { Revelar } from "@/components/portafolio/Revelar";
 import {
-  CATEGORIAS,
   PORTAFOLIO_ASPECT,
   getProyecto,
   portafolio,
@@ -50,17 +50,6 @@ export async function generateMetadata({
   };
 }
 
-function Dato({ etiqueta, valor }: { etiqueta: string; valor: string }) {
-  return (
-    <div className="border-t border-tinta/10 pt-4">
-      <dt className="text-muted-foreground text-xs tracking-widest uppercase">
-        {etiqueta}
-      </dt>
-      <dd className="mt-2">{valor}</dd>
-    </div>
-  );
-}
-
 function Bloque({ titulo, texto }: { titulo: string; texto: string }) {
   return (
     <Revelar className="grid gap-4 border-t border-tinta/10 pt-8 lg:grid-cols-12">
@@ -98,32 +87,52 @@ export default async function CasoPage({ params }: PageProps<"/portafolio/[slug]
             Portafolio
           </Link>
 
-          <Revelar>
-            <p className="text-muted-foreground mt-10 text-sm tracking-widest uppercase">
-              {p.servicio}
-            </p>
-            <h1 className="mt-3 text-5xl leading-[1.05] lg:text-8xl">{p.nombre}</h1>
-          </Revelar>
+          <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-16">
+            <div className="lg:col-span-7">
+              <Revelar>
+                <p className="text-muted-foreground text-sm tracking-widest uppercase">
+                  {p.servicio}
+                </p>
+                <h1 className="mt-3 text-5xl leading-[1.05] uppercase lg:text-8xl">
+                  {p.nombre}
+                </h1>
+              </Revelar>
 
-          {p.resumen && (
-            <Revelar delay={0.1}>
-              <p className="text-muted-foreground mt-6 max-w-3xl text-lg leading-relaxed lg:text-xl">
-                {p.resumen}
-              </p>
-            </Revelar>
-          )}
+              {p.resumen && (
+                <Revelar delay={0.1}>
+                  <p className="text-muted-foreground mt-6 max-w-2xl text-lg leading-relaxed lg:text-xl">
+                    {p.resumen}
+                  </p>
+                </Revelar>
+              )}
 
-          <Revelar delay={0.15}>
-            <dl className="mt-10 grid grid-cols-2 gap-6 lg:grid-cols-4">
-              <Dato etiqueta="Servicio" valor={p.servicio} />
-              <Dato
-                etiqueta="Categoría"
-                valor={p.categorias.map((c) => CATEGORIAS[c]).join(", ")}
+              {p.etiquetas && p.etiquetas.length > 0 && (
+                <Revelar delay={0.15}>
+                  <ul aria-label="Servicios del proyecto" className="mt-8 flex flex-wrap gap-2">
+                    {p.etiquetas.map((e) => (
+                      <li
+                        key={e}
+                        className="rounded-full border border-tinta/15 bg-papel/60 px-4 py-2 text-sm backdrop-blur"
+                      >
+                        {e}
+                      </li>
+                    ))}
+                  </ul>
+                </Revelar>
+              )}
+            </div>
+
+            <Revelar delay={0.2} className="lg:col-span-5">
+              <DetallesProyecto
+                filas={[
+                  { etiqueta: "Cliente", valor: p.cliente ?? p.nombre },
+                  ...(p.industria ? [{ etiqueta: "Industria", valor: p.industria }] : []),
+                  { etiqueta: "Servicios", valor: p.servicios ?? [p.servicio] },
+                  ...(p.anio ? [{ etiqueta: "Año", valor: p.anio }] : []),
+                ]}
               />
-              {p.industria && <Dato etiqueta="Industria" valor={p.industria} />}
-              {p.anio && <Dato etiqueta="Año" valor={p.anio} />}
-            </dl>
-          </Revelar>
+            </Revelar>
+          </div>
         </Container>
       </header>
 
