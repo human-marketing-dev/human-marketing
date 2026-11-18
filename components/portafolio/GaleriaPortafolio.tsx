@@ -26,22 +26,11 @@ type Filtro = Categoria | "todos";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-/**
- * Patron del grid en lg: una card a todo el ancho y luego dos a la mitad,
- * repetido. Se calcula sobre la lista ya filtrada para que nunca quede un
- * hueco al cambiar de filtro.
- */
-function esAncha(i: number) {
-  return i % 3 === 0;
-}
-
 function Card({
   proyecto,
-  ancha,
   prioridad,
 }: {
   proyecto: Proyecto;
-  ancha: boolean;
   prioridad: boolean;
 }) {
   const uid = useId();
@@ -83,7 +72,7 @@ function Card({
           fill
           quality={82}
           priority={prioridad}
-          sizes={ancha ? "(min-width: 1450px) 1322px, 100vw" : "(min-width: 768px) 50vw, 100vw"}
+          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
           className="object-cover transition duration-700 ease-out group-hover:scale-[1.04]"
         />
         <AnimatePresence>
@@ -114,7 +103,7 @@ function Card({
           >
             {proyecto.servicio}
           </p>
-          <h2 className={cn("mt-2", ancha ? "text-2xl lg:text-4xl" : "text-2xl")}>
+          <h2 className="mt-2 text-2xl">
             {/* Enlace estirado, mismo patron que Home/Portafolio. */}
             <Link
               href={rutaProyecto(proyecto)}
@@ -202,7 +191,7 @@ export function GaleriaPortafolio({ proyectos }: { proyectos: Proyecto[] }) {
 
       <motion.ul
         layout={!reduceMotion}
-        className="mt-10 grid grid-cols-1 gap-x-6 gap-y-14 md:grid-cols-2"
+        className="mt-10 grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3"
       >
         <AnimatePresence mode="popLayout" initial={false}>
           {visibles.map((proyecto, i) => (
@@ -213,9 +202,8 @@ export function GaleriaPortafolio({ proyectos }: { proyectos: Proyecto[] }) {
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, filter: "blur(8px)" }}
               transition={{ duration: reduceMotion ? 0 : 0.6, ease: EASE }}
-              className={cn(esAncha(i) && "md:col-span-2")}
             >
-              <Card proyecto={proyecto} ancha={esAncha(i)} prioridad={i === 0} />
+              <Card proyecto={proyecto} prioridad={i < 3} />
             </motion.li>
           ))}
         </AnimatePresence>

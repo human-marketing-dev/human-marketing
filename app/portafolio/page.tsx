@@ -3,6 +3,11 @@ import type { Metadata } from "next";
 import { Container } from "@/components/layout/Container";
 import { CtaProyecto } from "@/components/portafolio/CtaProyecto";
 import { GaleriaPortafolio } from "@/components/portafolio/GaleriaPortafolio";
+import { Reviews } from "@/components/home/Reviews";
+import { AgenciaMarketingDigital } from "@/components/sections/agencia-marketing-digital";
+import { Clientes } from "@/components/sections/clientes";
+import { Servicios } from "@/components/sections/servicios";
+import { VideosDestacados } from "@/components/sections/videos-destacados";
 import { portafolio } from "@/lib/portafolio";
 
 export const metadata: Metadata = {
@@ -37,6 +42,11 @@ export default function PortafolioPage() {
         </Container>
       </section>
 
+      <VideosDestacados />
+      <AgenciaMarketingDigital eyebrow="Sobre Nosotros" nivel="h2" />
+      <Clientes />
+      <Servicios />
+      <Reviews />
       <CtaProyecto />
     </>
   );

@@ -5,7 +5,21 @@ import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/button";
 import { GradientText } from "@/components/ui/gradient-text-fill";
 
-export function AgenciaMarketingDigital() {
+type Props = {
+  /** Texto del eyebrow sobre el logotipo en degradado. */
+  eyebrow?: string;
+  /**
+   * En el Home el eyebrow es el h1 de la pagina. En cualquier otra pagina ya
+   * hay un h1, asi que ahi se pinta como h2.
+   */
+  nivel?: "h1" | "h2";
+};
+
+export function AgenciaMarketingDigital({
+  eyebrow = "Agencia de Marketing Digital",
+  nivel = "h1",
+}: Props = {}) {
+  const Titulo = nivel;
   return (
     <section
       id="agencia-marketing-digital"
@@ -26,12 +40,12 @@ export function AgenciaMarketingDigital() {
           </div>
 
           <div>
-            <h1
+            <Titulo
               id="agencia-marketing-digital-titulo"
               className="text-muted-foreground mb-0 text-sm tracking-widest uppercase md:text-base"
             >
-              Agencia de Marketing Digital
-            </h1>
+              {eyebrow}
+            </Titulo>
 
             <p className="mb-6">
               <GradientText
