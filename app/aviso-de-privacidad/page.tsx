@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { Container } from "@/components/layout/Container";
+import { contacto } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Aviso de Privacidad",
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     "Aviso de privacidad de Human Marketing: qué datos personales recabamos, para qué los usamos y cómo ejercer tus derechos ARCO.",
 };
 
-const CORREO = "info@humanmarketing.mx";
+const CORREO = contacto.correo;
 
 function Correo() {
   return (
