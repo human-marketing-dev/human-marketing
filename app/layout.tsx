@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { WhatsAppFlotante } from "@/components/layout/WhatsAppFlotante";
 import { site } from "@/lib/site";
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           </main>
           <Footer />
         </div>
+        <WhatsAppFlotante />
       </body>
     </html>
   );
