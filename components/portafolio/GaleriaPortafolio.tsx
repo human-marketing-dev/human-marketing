@@ -11,7 +11,7 @@ import {
   useReducedMotion,
   useSpring,
 } from "motion/react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Plus } from "lucide-react";
 
 import {
   CATEGORIAS,
@@ -23,6 +23,9 @@ import {
 import { cn } from "@/lib/utils";
 
 type Filtro = Categoria | "todos";
+
+/** Dos filas de 3 en escritorio. Debajo de lg se esconden las 2 ultimas del lote. */
+const POR_LOTE = 6;
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -127,6 +130,9 @@ function Card({
 
 export function GaleriaPortafolio({ proyectos }: { proyectos: Proyecto[] }) {
   const [filtro, setFiltro] = useState<Filtro>("todos");
+  const [lotes, setLotes] = useState(1);
+  // Cuantas habia antes de "Ver mas", para escalonar solo las nuevas.
+  const [previas, setPrevias] = useState(0);
   const reduceMotion = useReducedMotion();
 
   type Opcion = { id: Filtro; label: string; total: number };
@@ -139,10 +145,16 @@ export function GaleriaPortafolio({ proyectos }: { proyectos: Proyecto[] }) {
     })),
   ].filter((o) => o.total > 0);
 
-  const visibles =
+  const filtrados =
     filtro === "todos"
       ? proyectos
       : proyectos.filter((p) => p.categorias.includes(filtro));
+  const limite = lotes * POR_LOTE;
+  const visibles = filtrados.slice(0, limite);
+  const restantes = filtrados.length - limite;
+  // Debajo de lg el lote es de 4: las 2 ultimas del lote se ocultan con CSS
+  // mientras quede algo por mostrar (asi no hace falta saber el ancho en JS).
+  const ocultaEnChico = (i: number) => restantes > 0 && i >= limite - 2;
 
   return (
     <LayoutGroup>
@@ -158,7 +170,11 @@ export function GaleriaPortafolio({ proyectos }: { proyectos: Proyecto[] }) {
               key={o.id}
               type="button"
               aria-pressed={activo}
-              onClick={() => setFiltro(o.id)}
+              onClick={() => {
+                setFiltro(o.id);
+                setLotes(1);
+                setPrevias(0);
+              }}
               className={cn(
                 "relative shrink-0 rounded-full border px-5 py-2.5 text-sm transition-colors",
                 activo
@@ -186,7 +202,7 @@ export function GaleriaPortafolio({ proyectos }: { proyectos: Proyecto[] }) {
       </div>
 
       <p className="sr-only" aria-live="polite">
-        {visibles.length} proyectos
+        {visibles.length} de {filtrados.length} proyectos
       </p>
 
       <motion.ul
@@ -201,13 +217,47 @@ export function GaleriaPortafolio({ proyectos }: { proyectos: Proyecto[] }) {
               initial={reduceMotion ? false : { opacity: 0, y: 24, filter: "blur(12px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, filter: "blur(8px)" }}
-              transition={{ duration: reduceMotion ? 0 : 0.6, ease: EASE }}
+              transition={{
+                duration: reduceMotion ? 0 : 0.6,
+                ease: EASE,
+                delay: reduceMotion || i < previas ? 0 : (i - previas) * 0.07,
+              }}
+              className={cn(ocultaEnChico(i) && "max-lg:hidden")}
             >
               <Card proyecto={proyecto} prioridad={i < 3} />
             </motion.li>
           ))}
         </AnimatePresence>
       </motion.ul>
+
+      <AnimatePresence initial={false}>
+        {restantes > 0 && (
+          <motion.div
+            layout={!reduceMotion}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.2 } }}
+            className="mt-14 flex justify-center"
+          >
+            <button
+              type="button"
+              onClick={() => {
+                setPrevias(visibles.length);
+                setLotes((n) => n + 1);
+              }}
+              className="group/mas inline-flex items-center gap-3 rounded-full border border-tinta/15 py-2 pr-2 pl-6 transition-colors hover:border-tinta"
+            >
+              Ver más proyectos
+              {/* Debajo de lg hay 2 ocultas de mas (ver ocultaEnChico). */}
+              <span className="text-tinta/40 tabular-nums lg:hidden">{restantes + 2}</span>
+              <span className="text-tinta/40 tabular-nums max-lg:hidden">{restantes}</span>
+              <span className="flex size-9 items-center justify-center rounded-full bg-tinta text-papel transition-transform duration-300 group-hover/mas:rotate-90">
+                <Plus className="size-4" />
+              </span>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </LayoutGroup>
   );
 }

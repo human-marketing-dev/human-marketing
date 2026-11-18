@@ -12,8 +12,7 @@ export type Resena = {
 
 /**
  * Copiadas a mano del perfil de Google Business, textuales (incluidas las
- * erratas: son citas). El orden esta pensado para que las tres columnas
- * queden parejas en escritorio: si se agregan o quitan, revisar la vista.
+ * erratas: son citas). Van en un carrusel, en este orden.
  * No llevan schema.org Review: Google no muestra estrellas para reseñas de un
  * negocio publicadas en su propio sitio.
  */

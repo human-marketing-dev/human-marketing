@@ -1,6 +1,7 @@
 import { ArrowUpRight, Star } from "lucide-react";
 
 import { Container } from "@/components/layout/Container";
+import { SliderResenas } from "@/components/home/SliderResenas";
 import { GoogleGIcon } from "@/components/ui/social-icons";
 import { resenas, type Resena } from "@/lib/resenas";
 import { contacto } from "@/lib/site";
@@ -44,7 +45,7 @@ function Estrellas({ valor }: { valor: number }) {
 function Card({ resena, acento }: { resena: Resena; acento: string }) {
   const fecha = new Date(`${resena.fecha}-01T00:00:00Z`);
   return (
-    <figure className="mb-4 break-inside-avoid rounded-3xl border border-tinta/10 bg-papel p-6 lg:p-8">
+    <figure className="flex h-full flex-col rounded-3xl border border-tinta/10 bg-papel p-6 lg:p-8">
       <div className="flex items-center justify-between gap-4">
         <Estrellas valor={resena.estrellas} />
         <GoogleGIcon className="size-5 shrink-0" />
@@ -52,7 +53,7 @@ function Card({ resena, acento }: { resena: Resena; acento: string }) {
       <blockquote className="mt-4 leading-relaxed">
         <p>“{resena.texto}”</p>
       </blockquote>
-      <figcaption className="mt-6 flex items-center gap-3">
+      <figcaption className="mt-auto flex items-center gap-3 pt-6">
         <span
           aria-hidden
           className="flex size-10 shrink-0 items-center justify-center rounded-full text-sm text-white"
@@ -105,14 +106,16 @@ export function Reviews() {
           </a>
         </div>
 
-        <div className="mt-12 columns-1 gap-4 md:columns-2 lg:columns-3">
-          {resenas.map((resena, i) => (
-            <Card
-              key={resena.autor}
-              resena={resena}
-              acento={ACENTOS[i % ACENTOS.length]}
-            />
-          ))}
+        <div className="mt-12">
+          <SliderResenas>
+            {resenas.map((resena, i) => (
+              <Card
+                key={resena.autor}
+                resena={resena}
+                acento={ACENTOS[i % ACENTOS.length]}
+              />
+            ))}
+          </SliderResenas>
         </div>
       </Container>
     </section>
