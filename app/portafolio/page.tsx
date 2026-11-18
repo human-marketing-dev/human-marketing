@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { Container } from "@/components/layout/Container";
-import { CtaProyecto } from "@/components/portafolio/CtaProyecto";
+import { LeadForm } from "@/components/sections/lead-form";
 import { GaleriaPortafolio } from "@/components/portafolio/GaleriaPortafolio";
 import { Reviews } from "@/components/home/Reviews";
 import { AgenciaMarketingDigital } from "@/components/sections/agencia-marketing-digital";
@@ -47,7 +47,7 @@ export default function PortafolioPage() {
       <Clientes />
       <Servicios />
       <Reviews />
-      <CtaProyecto />
+      <LeadForm />
     </>
   );
 }

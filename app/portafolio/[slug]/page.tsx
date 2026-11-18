@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import { Container } from "@/components/layout/Container";
-import { CtaProyecto } from "@/components/portafolio/CtaProyecto";
+import { LeadForm } from "@/components/sections/lead-form";
 import { PortadaCaso } from "@/components/portafolio/PortadaCaso";
 import { Revelar } from "@/components/portafolio/Revelar";
 import {
@@ -230,7 +230,7 @@ export default async function CasoPage({ params }: PageProps<"/portafolio/[slug]
         </Container>
       </nav>
 
-      <CtaProyecto />
+      <LeadForm />
     </article>
   );
 }
