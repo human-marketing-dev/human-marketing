@@ -8,6 +8,12 @@ export const site = {
     "PENDIENTE: descripcion meta del sitio (150-160 caracteres).",
 } as const;
 
+export const contacto = {
+  /** Formato de wa.me: solo digitos, con lada de pais. */
+  whatsapp: "5218144914316",
+  correo: "info@humanmarketing.mx",
+} as const;
+
 export type NavItem = {
   label: string;
   href: string;

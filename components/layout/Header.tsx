@@ -33,12 +33,13 @@ export function Header() {
     if (open) setOpen(false);
   }
 
-  // Sin margen lateral: la barra ocupa todo el ancho del lienzo. Arriba y abajo
-  // 12px, y el mismo valor en top-3 al pegarse, asi que no hay transicion.
+  // Sin margen lateral: la barra ocupa todo el ancho del lienzo, y su padding
+  // horizontal es el mismo del Container para alinear logo y menu con el
+  // contenido de las secciones. Arriba y abajo 12px, y el mismo valor en top-3 al pegarse, asi que no hay transicion.
   return (
     <header className="sticky top-3 z-50 mx-auto w-full max-w-site mt-3 mb-3">
       <div className="bg-background border border-transparent">
-        <div className="flex h-[var(--header-height)] items-center justify-between gap-8 px-6 lg:px-8">
+        <div className="flex h-[var(--header-height)] items-center justify-between gap-8 px-6 md:px-10 lg:px-16">
           <Link
             href="/"
             aria-label="Human Marketing, ir al inicio"

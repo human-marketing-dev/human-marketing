@@ -11,7 +11,7 @@ import {
   LinkedInIcon,
   VimeoIcon,
 } from "@/components/ui/social-icons";
-import { site } from "@/lib/site";
+import { contacto, site } from "@/lib/site";
 
 /**
  * Viñeta con el ícono de marca. Usa el archivo recortado a su bounding box:
@@ -74,15 +74,18 @@ export function Footer() {
           <div>
             <Titulo>Datos de Contacto</Titulo>
             <ul className="list-none space-y-3">
-              {/* TODO(dato): falta el número de WhatsApp. */}
               <Item>
-                <a href="https://wa.me/52XXXXXXXXXX" className={enlace}>
+                <a
+                  href={`https://wa.me/${contacto.whatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={enlace}
+                >
                   WhatsApp
                 </a>
               </Item>
-              {/* TODO(dato): falta la dirección de correo. */}
               <Item>
-                <a href="mailto:" className={enlace}>
+                <a href={`mailto:${contacto.correo}`} className={enlace}>
                   Correo Electrónico
                 </a>
               </Item>
