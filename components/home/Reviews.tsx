@@ -1,6 +1,7 @@
 import { ArrowUpRight, Star } from "lucide-react";
 
 import { Container } from "@/components/layout/Container";
+import { GoogleGIcon } from "@/components/ui/social-icons";
 import { resenas, type Resena } from "@/lib/resenas";
 import { contacto } from "@/lib/site";
 
@@ -44,7 +45,10 @@ function Card({ resena, acento }: { resena: Resena; acento: string }) {
   const fecha = new Date(`${resena.fecha}-01T00:00:00Z`);
   return (
     <figure className="mb-4 break-inside-avoid rounded-3xl border border-tinta/10 bg-papel p-6 lg:p-8">
-      <Estrellas valor={resena.estrellas} />
+      <div className="flex items-center justify-between gap-4">
+        <Estrellas valor={resena.estrellas} />
+        <GoogleGIcon className="size-5 shrink-0" />
+      </div>
       <blockquote className="mt-4 leading-relaxed">
         <p>“{resena.texto}”</p>
       </blockquote>
@@ -95,6 +99,7 @@ export function Reviews() {
             rel="noopener noreferrer"
             className="group/cta inline-flex shrink-0 items-center gap-2"
           >
+            <GoogleGIcon className="size-5" />
             Ver todas en Google
             <ArrowUpRight className="size-4 transition-transform group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5" />
           </a>
