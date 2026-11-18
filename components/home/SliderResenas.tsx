@@ -10,14 +10,14 @@ import { cn } from "@/lib/utils";
 
 /**
  * Carrusel de reseñas: 1 tarjeta y un poco de la siguiente en movil, 2 en
- * tablet, 3 en escritorio. Autoplay lento que se detiene al interactuar;
- * sin autoplay con prefers-reduced-motion.
+ * tablet, 3 en escritorio. Avanza solo, se pausa mientras el mouse esta
+ * encima y retoma al salir; sin autoplay con prefers-reduced-motion.
  */
 export function SliderResenas({ children }: { children: ReactNode }) {
   const reduceMotion = useReducedMotion();
   const [emblaRef, embla] = useEmblaCarousel(
     { align: "start", loop: true, skipSnaps: false },
-    reduceMotion ? [] : [Autoplay({ delay: 6000, stopOnInteraction: true, stopOnMouseEnter: true })],
+    reduceMotion ? [] : [Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true })],
   );
   const [actual, setActual] = useState(0);
   const [snaps, setSnaps] = useState<number[]>([]);
@@ -40,7 +40,8 @@ export function SliderResenas({ children }: { children: ReactNode }) {
     };
   }, [embla, sync]);
 
-  const detenerAutoplay = () => embla?.plugins().autoplay?.stop();
+  // Tras un click manual, reinicia la cuenta para que no salte enseguida.
+  const reiniciarAutoplay = () => embla?.plugins().autoplay?.reset();
 
   const slides = Children.toArray(children);
 
@@ -75,7 +76,7 @@ export function SliderResenas({ children }: { children: ReactNode }) {
               aria-label={`Ir a la reseña ${i + 1}`}
               aria-current={i === actual ? "true" : undefined}
               onClick={() => {
-                detenerAutoplay();
+                reiniciarAutoplay();
                 embla?.scrollTo(i);
               }}
               className="flex h-6 items-center"
@@ -94,7 +95,7 @@ export function SliderResenas({ children }: { children: ReactNode }) {
             type="button"
             aria-label="Reseña anterior"
             onClick={() => {
-              detenerAutoplay();
+              reiniciarAutoplay();
               embla?.scrollPrev();
             }}
             className="flex size-11 items-center justify-center rounded-full border border-tinta/15 transition-colors hover:border-tinta hover:bg-tinta hover:text-papel"
@@ -105,7 +106,7 @@ export function SliderResenas({ children }: { children: ReactNode }) {
             type="button"
             aria-label="Reseña siguiente"
             onClick={() => {
-              detenerAutoplay();
+              reiniciarAutoplay();
               embla?.scrollNext();
             }}
             className="flex size-11 items-center justify-center rounded-full border border-tinta/15 transition-colors hover:border-tinta hover:bg-tinta hover:text-papel"

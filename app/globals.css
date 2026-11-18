@@ -168,6 +168,11 @@ html {
   html {
     @apply font-sans;
   }
+  /* Tailwind 4 deja los botones con cursor normal; aqui vuelve la manita. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
 }
 /* ── Marquee (CSS plano, independiente de la version de Tailwind) ───────── */
 @keyframes marquee {
