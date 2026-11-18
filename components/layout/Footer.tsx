@@ -91,7 +91,7 @@ export function Footer() {
               </Item>
               <Item>
                 <a
-                  href="https://share.google/8rEez1GuB0MOlirUV"
+                  href={contacto.google}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={enlace}
