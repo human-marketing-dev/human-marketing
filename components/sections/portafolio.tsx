@@ -7,7 +7,12 @@ import { motion, useReducedMotion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 
 import { Container } from "@/components/layout/Container";
-import { PORTAFOLIO_ASPECT, portafolio, type Proyecto } from "@/lib/portafolio";
+import {
+  PORTAFOLIO_ASPECT,
+  portafolioHome,
+  rutaProyecto,
+  type Proyecto,
+} from "@/lib/portafolio";
 
 // Fila 1: tres cards de 2 columnas. Fila 2: dos de 3.
 // De chico a grande, al reves del bento de Servicios.
@@ -31,7 +36,7 @@ function Card({ proyecto }: { proyecto: Proyecto }) {
         style={{ aspectRatio: PORTAFOLIO_ASPECT }}
       >
         <Image
-          src={proyecto.src}
+          src={proyecto.portada.src}
           alt=""
           fill
           sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
@@ -54,7 +59,7 @@ function Card({ proyecto }: { proyecto: Proyecto }) {
               sin anidarla en un <a>. El nombre accesible sale del eyebrow mas
               el nombre visible, asi contiene el texto visible (WCAG 2.5.3). */}
           <Link
-            href={proyecto.href}
+            href={rutaProyecto(proyecto)}
             aria-labelledby={`${servicioId} ${nombreId}`}
             className="after:absolute after:inset-0"
           >
@@ -120,9 +125,9 @@ export function Portafolio() {
           }}
           className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-6"
         >
-          {portafolio.map((proyecto, i) => (
+          {portafolioHome.map((proyecto, i) => (
             <motion.div
-              key={proyecto.nombre}
+              key={proyecto.slug}
               variants={item}
               className={SPANS[i]}
             >
