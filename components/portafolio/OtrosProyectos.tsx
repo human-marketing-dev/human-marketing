@@ -12,8 +12,19 @@ import type { Proyecto } from "@/lib/portafolio";
 const flecha =
   "flex size-11 items-center justify-center rounded-full border border-tinta/15 transition-colors hover:border-tinta hover:bg-tinta hover:text-papel disabled:pointer-events-none disabled:opacity-30";
 
-/** Carrusel de los demas casos al pie de cada proyecto: 1, 2 o 3 visibles. */
-export function OtrosProyectos({ proyectos }: { proyectos: Proyecto[] }) {
+/** Carrusel de casos: al pie de cada proyecto y en las paginas de servicio. 1, 2 o 3 visibles. */
+export function OtrosProyectos({
+  proyectos,
+  eyebrow = "Portafolio",
+  titulo = "Más proyectos",
+  id,
+}: {
+  proyectos: Proyecto[];
+  eyebrow?: string;
+  titulo?: string;
+  /** Ancla de la seccion (p. ej. "proyectos"). */
+  id?: string;
+}) {
   const [emblaRef, embla] = useEmblaCarousel({ align: "start", loop: false });
   const [puedePrev, setPuedePrev] = useState(false);
   const [puedeNext, setPuedeNext] = useState(false);
@@ -36,15 +47,15 @@ export function OtrosProyectos({ proyectos }: { proyectos: Proyecto[] }) {
   }, [embla, sync]);
 
   return (
-    <section aria-labelledby="otros-proyectos-titulo" className="py-16 lg:py-24">
+    <section id={id} aria-labelledby="otros-proyectos-titulo" className="scroll-mt-24 py-16 lg:py-24">
       <Container>
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-muted-foreground text-sm tracking-widest uppercase">
-              Portafolio
+              {eyebrow}
             </p>
             <h2 id="otros-proyectos-titulo" className="mt-3 text-3xl lg:text-5xl">
-              Más proyectos
+              {titulo}
             </h2>
           </div>
           <div className="flex items-center gap-4">
